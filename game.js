@@ -221,7 +221,7 @@ const slideButton =
     document.getElementById("slideButton");
 
 highScoreElement.textContent =
-    `HIGH SCORE: ${highScore}`;
+    `HIGH SCORE: ${Math.floor(highScore)}`;
 
 // ============================================================
 // AUDIO
@@ -954,16 +954,13 @@ function gameOver() {
 
     player.isSliding = false;
 
-    if (
-        score > highScore
-    ) {
+    if (score > highScore) {
+    highScore = Math.floor(score);
 
-        highScore = score;
-
-        localStorage.setItem(
-            "ninjaHighScore",
-            highScore
-        );
+    localStorage.setItem(
+        "ninjaHighScore",
+        highScore
+    );
     }
 
     highScoreElement.textContent =
