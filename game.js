@@ -957,14 +957,17 @@ function gameOver() {
     if (score > highScore) {
     highScore = Math.floor(score);
 
+    if (score > highScore) {
+    highScore = Math.floor(score);
+
     localStorage.setItem(
         "ninjaHighScore",
-        highScore
+        String(highScore)
     );
     }
 
     highScoreElement.textContent =
-        `HIGH SCORE: ${highScore}`;
+    `HIGH SCORE: ${Math.floor(highScore)}`;
 
     finalScore.textContent =
         `SCORE: ${Math.floor(score)}`;
