@@ -1575,7 +1575,7 @@ function spawnObstacle() {
     // PILAR BATU TINGGI
     if (type === "tall") {
         obstacle.width = 48;
-        obstacle.height = 70;
+        obstacle.height = 80;
         obstacle.y = GROUND_Y - obstacle.height;
     }
 
