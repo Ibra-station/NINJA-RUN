@@ -1,217 +1,27 @@
-
 /* ==================================================
-   NINJA RUN - STYLE.CSS
-   ================================================== */
+   NINJA RUN - DARK PIXEL UI
+   Tema: Ninja, bambu, dan reruntuhan kuno
+================================================== */
 
-/* RESET */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 :root {
-    color-scheme: dark;
-    font-family: Arial, sans-serif;
+    --night: #090b10;
+    --panel: #111914;
+    --panel-light: #1b2720;
+    --bamboo: #78965a;
+    --bamboo-dark: #344b32;
+    --gold: #c4a66a;
+    --gold-dark: #705b35;
+    --red: #a4433d;
+    --text: #e4e5cf;
+    --muted: #a6ad98;
+    --pixel-font: 'Press Start 2P', monospace;
 }
 
-/* HALAMAN */
-body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background: #090b12;
-    color: #fff;
-}
-
-/* AREA PERMAINAN */
-.game-wrapper {
-    position: relative;
-    width: min(1000px, 100vw);
-    height: min(500px, 70vh);
-    overflow: hidden;
-    border: 3px solid #1b1d28;
-    background: #101827;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-}
-
-/* CANVAS */
-#gameCanvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-    image-rendering: auto;
-}
-
-/* SKOR */
-.top-ui {
-    position: absolute;
-    top: 14px;
-    left: 20px;
-    right: 20px;
-    z-index: 10;
-
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-
-    font-size: 17px;
-    font-weight: 700;
-    text-shadow: 2px 2px #000;
-    pointer-events: none;
-}
-
-/* LAYAR MENU DAN GAME OVER */
-.screen {
-    position: absolute;
-    inset: 0;
-    z-index: 20;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 14px;
-
-    padding: 20px;
-    text-align: center;
-    background: rgba(4, 5, 10, 0.70);
-}
-
-.screen h1 {
-    font-size: 48px;
-    letter-spacing: 5px;
-}
-
-.screen p {
-    font-size: 19px;
-}
-
-.screen .small {
-    font-size: 14px;
-    line-height: 1.7;
-}
-
-/* UTILITAS */
-.hidden {
-    display: none !important;
-}
-
-/* TOMBOL */
-button {
-    padding: 12px 25px;
-    border: 1px solid #3a3f50;
-    border-radius: 7px;
-
-    background: #202431;
-    color: #fff;
-
-    font-size: 16px;
-    font-weight: 700;
-
-    cursor: pointer;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-}
-
-button:hover {
-    background: #34394a;
-}
-
-button:focus-visible {
-    outline: 2px solid #8daeff;
-    outline-offset: 3px;
-}
-
-/* STATUS POWER-UP HTML */
-.power-ui {
-    position: absolute;
-    top: 48px;
-    left: 20px;
-    z-index: 11;
-
-    padding: 6px 10px;
-    border-radius: 8px;
-
-    background: rgba(10, 10, 18, 0.65);
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.power-ui span:first-child {
-    margin-right: 6px;
-    font-size: 18px;
-}
-
-/* KONTROL HP */
-.mobile-controls {
-    position: absolute;
-    right: 15px;
-    bottom: 14px;
-    left: 15px;
-    z-index: 15;
-
-    display: flex;
-    justify-content: space-between;
-
-    pointer-events: none;
-}
-
-.mobile-controls button {
-    padding: 14px 22px;
-    opacity: 0.72;
-    pointer-events: auto;
-}
-
-/* SEMBUNYIKAN KONTROL DI LAYAR LEBAR */
-@media (min-width: 700px) {
-    .mobile-controls {
-        display: none;
-    }
-}
-
-/* LAYAR PENDEK */
-@media (max-height: 430px) {
-    .game-wrapper {
-        height: 90vh;
-    }
-
-    .screen h1 {
-        font-size: 34px;
-    }
-}
-
-/* LAYAR HP SEMPIT */
-@media (max-width: 380px) {
-    .top-ui {
-        left: 10px;
-        right: 10px;
-        font-size: 13px;
-    }
-
-    .mobile-controls {
-        right: 8px;
-        left: 8px;
-    }
-
-    .mobile-controls button {
-        padding: 12px 16px;
-        font-size: 14px;
-    }
-
-    .screen h1 {
-        font-size: 36px;
-    }
-}
-
-#jumpButton,
-#slideButton {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    -webkit-user-select: none;
+* {
+    box-sizing: border-box;
+    image-rendering: pixelated;
 }
 
 html,
@@ -224,34 +34,464 @@ body {
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #080a12;
+    background: var(--night);
+    color: var(--text);
+    font-family: var(--pixel-font);
 }
 
-#game-wrapper {
+.game-wrapper {
+    position: relative;
     width: 100vw;
+    height: 100vh;
     height: 100dvh;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     overflow: hidden;
-    box-sizing: border-box;
+    background: var(--night);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
+
+/* =========================
+   GAME CANVAS
+   Ukuran internal tidak diubah
+========================= */
 
 #gameCanvas {
     display: block;
     width: 100%;
     height: 100%;
-    max-width: none;
-    max-height: none;
-    object-fit: fill;
+    object-fit: contain;
+    background: var(--night);
 }
 
-#jumpButton,
-#slideButton {
+/* =========================
+   SCORE DAN HIGH SCORE
+========================= */
+
+.top-ui {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    z-index: 5;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+
+    font-family: var(--pixel-font);
+    font-size: clamp(7px, 1.1vw, 12px);
+    line-height: 1.8;
+    text-transform: uppercase;
+
+    pointer-events: none;
+}
+
+#score,
+#highScore {
+    max-width: 48%;
+    padding: 9px 11px;
+
+    color: var(--text);
+    background: rgba(9, 17, 12, 0.88);
+
+    border: 2px solid var(--bamboo-dark);
+    border-left: 4px solid var(--bamboo);
+
+    box-shadow:
+        3px 3px 0 rgba(0, 0, 0, 0.45),
+        inset 0 0 0 1px rgba(196, 166, 106, 0.12);
+
+    overflow-wrap: anywhere;
+}
+
+#highScore {
+    text-align: right;
+    border-left: 2px solid var(--bamboo-dark);
+    border-right: 4px solid var(--gold-dark);
+}
+
+/* =========================
+   START, PAUSE, GAME OVER
+========================= */
+
+.screen {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(5, 9, 7, 0.82),
+            rgba(7, 12, 9, 0.92)
+        );
+}
+
+.screen h1 {
+    width: min(100%, 620px);
+    margin: 0 0 22px;
+    padding: 22px 14px;
+
+    color: var(--gold);
+    background: var(--panel);
+
+    border: 3px solid var(--gold-dark);
+    outline: 2px solid rgba(120, 150, 90, 0.4);
+    outline-offset: 4px;
+
+    box-shadow:
+        6px 6px 0 rgba(0, 0, 0, 0.65),
+        inset 0 -5px 0 rgba(0, 0, 0, 0.25);
+
+    font-size: clamp(17px, 3.3vw, 34px);
+    line-height: 1.8;
+    letter-spacing: 1px;
+
+    text-shadow: 3px 3px 0 #273629;
+}
+
+.screen p {
+    max-width: 600px;
+    margin: 8px 0;
+
+    color: var(--text);
+    font-size: clamp(8px, 1.15vw, 12px);
+    line-height: 2.2;
+}
+
+.screen .small {
+    color: var(--muted);
+    font-size: clamp(7px, 0.95vw, 10px);
+    line-height: 2.4;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================
+   TOMBOL PIXEL
+========================= */
+
+button {
+    position: relative;
+    padding: 16px 22px;
+
+    color: var(--text);
+    background: var(--panel-light);
+
+    border: 3px solid var(--bamboo);
+    border-radius: 0;
+
+    box-shadow:
+        4px 4px 0 #050806,
+        inset 0 -4px 0 rgba(0, 0, 0, 0.35);
+
+    font-family: var(--pixel-font);
+    font-size: clamp(8px, 1.1vw, 11px);
+    line-height: 1.8;
+
+    cursor: pointer;
     touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+
+    transition:
+        background-color 100ms linear,
+        color 100ms linear,
+        transform 100ms linear;
+}
+
+button:hover {
+    color: #fff3c5;
+    background: #2b3b2b;
+    border-color: var(--gold);
+}
+
+button:active {
+    transform: translate(3px, 3px);
+    box-shadow:
+        1px 1px 0 #050806,
+        inset 0 -2px 0 rgba(0, 0, 0, 0.35);
+}
+
+#startButton,
+#restartButton {
+    min-width: 180px;
+    margin-top: 20px;
+
+    color: var(--gold);
+    background: #253426;
+    border-color: var(--gold);
+}
+
+#startButton:hover,
+#restartButton:hover {
+    color: #fff3c5;
+    background: #3a4d35;
+}
+
+/* Aksen merah untuk Game Over */
+
+#gameOverScreen h1 {
+    color: #df7770;
+    border-color: var(--red);
+    text-shadow: 3px 3px 0 #431c1b;
+}
+
+#gameOverScreen #restartButton {
+    color: #f0b1a8;
+    background: #321c1b;
+    border-color: var(--red);
+}
+
+#gameOverScreen #restartButton:hover {
+    background: #542725;
+}
+
+/* =========================
+   POWER-UP INDICATOR
+========================= */
+
+.power-ui {
+    position: absolute;
+    top: 76px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    width: max-content;
+    max-width: calc(100% - 32px);
+    padding: 8px 12px;
+
+    color: var(--gold);
+    background: rgba(9, 17, 12, 0.78);
+
+    border: 2px solid var(--bamboo-dark);
+    border-bottom-color: var(--gold-dark);
+
+    font-family: var(--pixel-font);
+    font-size: clamp(7px, 1vw, 10px);
+    line-height: 1.8;
+
+    pointer-events: none;
+    overflow-wrap: anywhere;
+}
+
+#powerIcon {
+    flex-shrink: 0;
+    color: var(--gold);
+    font-size: 15px;
+}
+
+/* =========================
+   KONTROL MOBILE
+   Default: tidak tampil di desktop
+========================= */
+
+.mobile-controls {
+    display: none;
+}
+
+/* Tampilkan pada perangkat dengan layar sentuh utama */
+
+@media (hover: none) and (pointer: coarse) {
+    .mobile-controls {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 8;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+
+        padding:
+            14px
+            max(16px, env(safe-area-inset-right))
+            max(14px, env(safe-area-inset-bottom))
+            max(16px, env(safe-area-inset-left));
+
+        background: linear-gradient(
+            to top,
+            rgba(7, 12, 9, 0.96),
+            rgba(7, 12, 9, 0.72)
+        );
+
+        border-top: 3px solid var(--bamboo-dark);
+        pointer-events: none;
+    }
+
+    .mobile-controls button {
+        min-width: 108px;
+        min-height: 58px;
+        padding: 12px 14px;
+        font-size: 9px;
+
+        pointer-events: auto;
+    }
+
+    #jumpButton {
+        color: #d9e5c7;
+        border-color: var(--bamboo);
+    }
+
+    #slideButton {
+        color: #e5d2a3;
+        border-color: var(--gold-dark);
+    }
+}
+
+/* =========================
+   PENYESUAIAN HP
+========================= */
+
+@media (max-width: 600px) {
+    .top-ui {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        gap: 7px;
+        font-size: 7px;
+    }
+
+    #score,
+    #highScore {
+        padding: 7px 6px;
+    }
+
+    .screen {
+        padding: 16px;
+    }
+
+    .screen h1 {
+        padding: 14px 8px;
+        margin-bottom: 14px;
+        font-size: clamp(14px, 4vw, 22px);
+    }
+
+    .screen p {
+        font-size: 8px;
+        line-height: 2;
+    }
+
+    .screen .small {
+        font-size: 7px;
+        line-height: 2.2;
+    }
+
+    #startButton,
+    #restartButton {
+        min-width: 150px;
+        padding: 12px 14px;
+    }
+
+    .power-ui {
+        top: 58px;
+        gap: 6px;
+        padding: 6px 8px;
+        font-size: 7px;
+    }
+}
+
+/* =========================
+   LAPTOP DENGAN LAYAR PENDEK
+========================= */
+
+@media (min-width: 601px) and (max-height: 600px) {
+    .top-ui {
+        top: 8px;
+    }
+
+    #score,
+    #highScore {
+        padding: 5px 8px;
+    }
+
+    .screen h1 {
+        margin-bottom: 10px;
+        padding: 12px;
+    }
+
+    .screen p {
+        margin: 4px 0;
+        line-height: 1.8;
+    }
+
+    #startButton,
+    #restartButton {
+        margin-top: 8px;
+    }
+}
+
+/* Kurangi animasi tombol jika diminta sistem */
+
+@media (prefers-reduced-motion: reduce) {
+    button {
+        transition: none;
+    }
+}
+
+/* FIX POSISI SCORE DAN BUFF */
+.top-ui {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+}
+
+#score,
+#highScore {
+    padding: 6px 8px;
+}
+
+.power-ui {
+    top: 76px;
+    left: 12px;
+    right: auto;
+    transform: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    max-width: 65%;
+    padding: 8px 10px;
+}
+
+/* FIX UNTUK HP */
+@media (max-width: 600px) {
+    .top-ui {
+        top: 10px;
+        left: 8px;
+        right: 8px;
+    }
+
+    .power-ui {
+        top: 62px;
+        left: 8px;
+        max-width: 70%;
+        padding: 6px 8px;
+        gap: 6px;
+    }
 }
