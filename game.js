@@ -240,7 +240,8 @@ const audio = {
     kunai: new Audio("audio/kunai.wav"), 
     // Suara saat mengambil buff
     pickup: new Audio("audio/powerup.wav"), 
-    shieldBreak: new Audio("audio/shield_break.wav")
+    shieldBreak: new Audio("audio/shield_break.wav"), 
+    buffEnd: new Audio("audio/buff_end.wav")
 };
 
 // BGM
@@ -254,6 +255,7 @@ audio.slide.volume = 0.55;
 audio.death.volume = 0.7;
 audio.kunai.volume = 0.45;
 audio.pickup.volume = 0.65;
+audio.buffEnd.volume = 0.6;
 
 // Timer untuk suara lari
 let runSoundTimer = 0;
@@ -307,6 +309,7 @@ function stopAllSFX() {
     stopAudio("death");
     stopAudio("kunai");
     stopAudio("pickup");
+    stopAudio("buffEnd");
 }
 
 // ============================================================
@@ -668,6 +671,7 @@ if (
         ) {
 
             player.shieldTime = 0;
+            playAudio("buffEnd");
         }
     }
 
@@ -726,6 +730,7 @@ if (
                 player.jumps =
                     player.maxJumps;
             }
+            playAudio("buffEnd");
         }
     }
 
@@ -745,6 +750,7 @@ if (
         ) {
 
             player.speedBoostTime = 0;
+            playAudio("buffEnd");
         }
     }
 
