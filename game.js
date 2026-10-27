@@ -3251,3 +3251,10 @@ document.addEventListener("keydown", function (e) {
     }
 });
 
+// ============================================================
+// EXPOSE CHEAT UNTUK TESTING DI CONSOLE
+// ============================================================
+
+window.activateCheat = activateCheat;
+window.cheats = cheats;
+
