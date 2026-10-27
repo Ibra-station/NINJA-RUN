@@ -11,6 +11,71 @@ canvas.height = 500;
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 const GROUND_Y = 420;
+ 
+const cheats = {
+    godMode: false,
+    infiniteJump: false,
+    allBuff: false,
+    speedHack: false
+};
+
+let cheatBuffer = "";
+const CHEAT_SPEED_MULTIPLIER = 1.8;
+const CHEAT_BUFF_DURATION = 999999999;
+
+function activateCheat(code) {
+    switch (code) {
+        case "GODMODE":
+            cheats.godMode = !cheats.godMode;
+            console.log("God Mode:", cheats.godMode ? "ON" : "OFF");
+            break;
+
+        case "INFINITEJUMP":
+            cheats.infiniteJump = !cheats.infiniteJump;
+            console.log("Infinite Jump:", cheats.infiniteJump ? "ON" : "OFF");
+            break;
+
+        case "ALLBUFF":
+            cheats.allBuff = !cheats.allBuff;
+
+            if (cheats.allBuff) {
+                player.shieldTime = CHEAT_BUFF_DURATION;
+                player.doubleJumpTime = CHEAT_BUFF_DURATION;
+                player.speedBoostTime = CHEAT_BUFF_DURATION;
+                player.maxJumps = Infinity;
+            } else {
+                player.shieldTime = 0;
+                player.doubleJumpTime = 0;
+                player.speedBoostTime = 0;
+                player.maxJumps = 1;
+            }
+
+            console.log("All Buff:", cheats.allBuff ? "ON" : "OFF");
+            break;
+
+        case "SPEEDHACK":
+            cheats.speedHack = !cheats.speedHack;
+            console.log("Speed Hack:", cheats.speedHack ? "ON" : "OFF");
+            break;
+
+        case "NORMAL":
+            cheats.godMode = false;
+            cheats.infiniteJump = false;
+            cheats.allBuff = false;
+            cheats.speedHack = false;
+
+            player.shieldTime = 0;
+            player.doubleJumpTime = 0;
+            player.speedBoostTime = 0;
+            player.maxJumps = 1;
+            
+            player.jumps = 0;
+
+            console.log("Semua cheat OFF");
+            break;
+    }
+}
+
 
 // ============================================================
 // GAME STATE
@@ -221,7 +286,7 @@ const slideButton =
     document.getElementById("slideButton");
 
 highScoreElement.textContent =
-    `HIGH SCORE: ${Math.floor(highScore)}`;
+    `HIGH SCORE: ${highScore}`;
 
 // ============================================================
 // AUDIO
@@ -400,6 +465,7 @@ function resetPlayer() {
     // ========================================================
 
     player.maxJumps = 1;
+    
 
     player.isSliding = false;
 
@@ -412,6 +478,13 @@ function resetPlayer() {
     player.doubleJumpTime = 0;
 
     player.speedBoostTime = 0;
+    
+    if (cheats.allBuff) {
+    player.shieldTime = CHEAT_BUFF_DURATION;
+    player.doubleJumpTime = CHEAT_BUFF_DURATION;
+    player.speedBoostTime = CHEAT_BUFF_DURATION;
+    player.maxJumps = Infinity;
+}
 
     player.animationFrame = 0;
 
@@ -464,9 +537,10 @@ function jump() {
     // ========================================================
 
     if (
-        player.jumps <
-        player.maxJumps
-    ) {
+    cheats.infiniteJump ||
+    cheats.allBuff ||
+    player.jumps < player.maxJumps
+) {
 
         player.velocityY =
             player.jumpPower;
@@ -679,20 +753,15 @@ if (
     // SHIELD COOLDOWN
     // ========================================================
 
-    if (
-        player.shieldCooldown > 0
-    ) {
+    
+if (player.shieldCooldown > 0) {
+    player.shieldCooldown -= delta;
 
-        player.shieldCooldown -=
-            delta;
-
-        if (
-            player.shieldCooldown <= 0
-        ) {
-
-            player.shieldCooldown = 0;
-        }
+    if (player.shieldCooldown <= 0) {
+        player.shieldCooldown = 0;
     }
+}
+
 
     // ========================================================
     // DOUBLE JUMP TIMER
@@ -753,6 +822,17 @@ if (
             playAudio("buffEnd");
         }
     }
+
+// ========================================================
+// CHEAT: ALL BUFF
+// ========================================================
+
+if (cheats.allBuff) {
+    player.shieldTime = CHEAT_BUFF_DURATION;
+    player.doubleJumpTime = CHEAT_BUFF_DURATION;
+    player.speedBoostTime = CHEAT_BUFF_DURATION;
+    player.maxJumps = Infinity;
+}
 
     // ========================================================
     // RUN ANIMATION
@@ -909,6 +989,7 @@ function updateDeathAnimation(delta) {
 // ============================================================
 
 function die() {
+    if (cheats.godMode) return;
 
     if (
         gameState === STATE.DEAD ||
@@ -948,23 +1029,27 @@ function die() {
 // GAME OVER
 // ============================================================
 
-
 function gameOver() {
-    gameState = STATE.GAMEOVER;
 
-    player.deathFrame = sprites.hit.length - 1;
+    gameState =
+        STATE.GAMEOVER;
+
+    player.deathFrame =
+        sprites.hit.length - 1;
+
     player.deathTimer = 0;
+
     player.isSliding = false;
 
-    // Bulatkan skor ke bilangan bulat
-    score = Math.floor(score);
+    if (
+        score > highScore
+    ) {
 
-    if (score > highScore) {
         highScore = score;
 
         localStorage.setItem(
             "ninjaHighScore",
-            String(highScore)
+            highScore
         );
     }
 
@@ -972,12 +1057,11 @@ function gameOver() {
         `HIGH SCORE: ${highScore}`;
 
     finalScore.textContent =
-        `SCORE: ${score}`;
+        `SCORE: ${Math.floor(score)}`;
 
-    scoreElement.textContent =
-        `SCORE: ${score}`;
-
-    gameOverScreen.classList.remove("hidden");
+    gameOverScreen.classList.remove(
+        "hidden"
+    );
 }
 
 
@@ -1683,15 +1767,18 @@ function updateObstacles(delta) {
     const dt =
         delta / 16.67;
 
-    let currentSpeed =
-        gameSpeed;
+    let currentSpeed = gameSpeed;
 
-    if (
-        player.speedBoostTime > 0
-    ) {
+if (cheats.speedHack) {
+    currentSpeed *= CHEAT_SPEED_MULTIPLIER;
+}
 
-        currentSpeed *= 1.7;
-    }
+if (
+    player.speedBoostTime > 0 &&
+    !cheats.allBuff
+) {
+    currentSpeed *= 1.7;
+}
 
     for (
         let i =
@@ -1977,18 +2064,20 @@ function spawnPowerUp() {
 
 function updatePowerUps(delta) {
 
-    const dt =
-        delta / 16.67;
+    const dt = delta / 16.67;
 
-    let currentSpeed =
-        gameSpeed;
+let currentSpeed = gameSpeed;
 
-    if (
-        player.speedBoostTime > 0
-    ) {
+if (cheats.speedHack) {
+    currentSpeed *= CHEAT_SPEED_MULTIPLIER;
+}
 
-        currentSpeed *= 1.7;
-    }
+if (
+    player.speedBoostTime > 0 &&
+    !cheats.allBuff
+) {
+    currentSpeed *= 1.7;
+}
 
     powerUpTimer +=
         delta;
@@ -2139,6 +2228,7 @@ function getPlayerHitbox() {
 // ============================================================
 
 function checkObstacleCollision() {
+    if (cheats.godMode) return;
     const hitbox = getPlayerHitbox();
     
     for (let i = obstacles.length - 1; i >= 0; i--) {
@@ -2167,6 +2257,7 @@ function checkObstacleCollision() {
 
 
 function checkEnemyKunaiCollision() {
+    if (cheats.godMode) return;
     const hitbox = getPlayerHitbox();
     
     for (let i = enemyKunai.length - 1; i >= 0; i--) {
@@ -3125,3 +3216,38 @@ function togglePause() {
 requestAnimationFrame(
     gameLoop
 );
+
+ 
+document.addEventListener("keydown", function (e) {
+    // Abaikan ketikan dari kolom input
+    if (
+        e.target &&
+        (e.target.tagName === "INPUT" ||
+         e.target.tagName === "TEXTAREA")
+    ) {
+        return;
+    }
+
+    if (e.key.length !== 1 || !/^[a-z]$/i.test(e.key)) {
+        return;
+    }
+
+    cheatBuffer = (cheatBuffer + e.key.toUpperCase()).slice(-20);
+
+    const codes = [
+        "GODMODE",
+        "INFINITEJUMP",
+        "ALLBUFF",
+        "SPEEDHACK",
+        "NORMAL"
+    ];
+
+    for (const code of codes) {
+        if (cheatBuffer.endsWith(code)) {
+            activateCheat(code);
+            cheatBuffer = "";
+            break;
+        }
+    }
+});
+
