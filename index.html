@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090b12">
+    <title>Ninja Run</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="game-wrapper">
+        <div class="top-ui">
+            <div id="score">SCORE: 0</div>
+            <div id="highScore">HIGH SCORE: 0</div>
+        </div>
+
+        <canvas
+            id="gameCanvas"
+            width="1000"
+            height="500"
+            aria-label="Permainan Ninja Run"
+        ></canvas>
+
+        <section id="startScreen" class="screen">
+            <h1>NINJA RUN</h1>
+            <p>Tekan SPACE atau tombol MULAI</p>
+
+            <p class="small">
+                SPACE / ↑ = Jump &amp; Double Jump<br>
+                ↓ = Slide / Tackle<br>
+                P = Pause
+            </p>
+
+            <button id="startButton" type="button">MULAI</button>
+        </section>
+
+        <section id="pauseScreen" class="screen hidden">
+            <h1>PAUSE</h1>
+            <p>Tekan P untuk lanjut</p>
+        </section>
+
+        <section id="gameOverScreen" class="screen hidden">
+            <h1>GAME OVER</h1>
+            <p id="finalScore">SCORE: 0</p>
+            <button id="restartButton" type="button">MAIN LAGI</button>
+        </section>
+
+        <div id="powerUI" class="power-ui hidden">
+            <span id="powerIcon">★</span>
+            <span id="powerText">POWER</span>
+        </div>
+
+        <nav class="mobile-controls" aria-label="Kontrol permainan">
+            <button id="jumpButton" type="button">JUMP</button>
+            <button id="slideButton" type="button">SLIDE</button>
+        </nav>
+    </main>
+
+    <script src="game.js"></script>
+</body>
+</html>
