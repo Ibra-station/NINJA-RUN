@@ -942,39 +942,36 @@ function die() {
 // GAME OVER
 // ============================================================
 
+
 function gameOver() {
+    gameState = STATE.GAMEOVER;
 
-    gameState =
-        STATE.GAMEOVER;
-
-    player.deathFrame =
-        sprites.hit.length - 1;
-
+    player.deathFrame = sprites.hit.length - 1;
     player.deathTimer = 0;
-
     player.isSliding = false;
 
-    if (score > highScore) {
-    highScore = Math.floor(score);
+    // Bulatkan skor ke bilangan bulat
+    score = Math.floor(score);
 
     if (score > highScore) {
-    highScore = Math.floor(score);
+        highScore = score;
 
-    localStorage.setItem(
-        "ninjaHighScore",
-        String(highScore)
-    );
+        localStorage.setItem(
+            "ninjaHighScore",
+            String(highScore)
+        );
     }
 
     highScoreElement.textContent =
-    `HIGH SCORE: ${Math.floor(highScore)}`;
+        `HIGH SCORE: ${highScore}`;
 
     finalScore.textContent =
-        `SCORE: ${Math.floor(score)}`;
+        `SCORE: ${score}`;
 
-    gameOverScreen.classList.remove(
-        "hidden"
-    );
+    scoreElement.textContent =
+        `SCORE: ${score}`;
+
+    gameOverScreen.classList.remove("hidden");
 }
 
 
